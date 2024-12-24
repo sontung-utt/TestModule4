@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/bd7b2915a7.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/add.css}" />
+    <title>Form thêm mới</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="form">
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <div th:if="${not #strings.isEmpty(errorMessage)}" class="error-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <form th:action="@{/customers/view}" th:object="${customer}" method="get">
+            <table border="1">
+                <tr>
+                    <th colspan="2">THÔNG TIN CHI TIẾT</th>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <label for="id">Mã khách hàng</label>
+                    </td>
+                    <td>
+                        <input type="text" name="id" id="id" th:field="*{id}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <label for="name">Tên khách hàng</label>
+                    </td>
+                    <td>
+                        <input type="text" name="name" id="name" th:field="*{name}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <label for="phone">Số điện thoại</label>
+                    </td>
+                    <td>
+                        <input type="text" name="phone" id="phone" th:field="*{phone}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info">
+                        <label for="email">Email</label>
+                    </td>
+                    <td>
+                        <input type="text" name="email" id="email" th:field="*{email}" readonly>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2" class="tdbtn">
+                        <a th:href="@{/customers/list}">
+                            <button type="button">Quay lại</button>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

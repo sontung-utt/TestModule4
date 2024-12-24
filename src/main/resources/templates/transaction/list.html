@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <script src="https://kit.fontawesome.com/bd7b2915a7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/list.css}" />
+    <title>Thông tin giao dịch</title>
+</head>
+<body>
+<div class="container">
+    <h3>THÔNG TIN GIAO DỊCH</h3>
+    <div class="main-info">
+        <div class="search">
+            <div class="add-button">
+                <a th:href="@{/transaction/add}">
+                    <i class="fa-solid fa-plus"></i>
+                    <p>Thêm mới</p>
+                </a>
+            </div>
+
+            <div class="search-input">
+                <form th:action="@{/transaction/list}" method="get">
+                    <input type="hidden" name="action" value="transaction">
+                    <div class="input">
+                        <input type="text" name="customerName" placeholder="Nhập tên khách hàng"
+                               th:value="${customerName}" />
+                    </div>
+                    <div class="icon">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+
+
+                </form>
+
+
+
+            </div>
+        </div>
+        <div class="info-product">
+            <table border="1">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã giao dịch</th>
+                    <th>Tên khách hàng</th>
+                    <th>Loại dịch vụ</th>
+                    <th>Ngày giao dịch</th>
+                    <th>Đơn giá (VND/m2)</th>
+                    <th>Diện tích (m2)</th>
+                    <th>Hành động</th>
+                </tr>
+
+                <!-- Hiển thị thông báo lỗi -->
+                <div th:if="${not #strings.isEmpty(errorMessage)}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <!-- Lặp qua danh sách phòng -->
+                <th:block th:each="item, iterStat : ${transactions}">
+                    <tr>
+                        <td class="small" th:text="${iterStat.index + 1}"></td>
+                        <td class="medium" th:text="${item.transactionCode}"></td>
+                        <td class="medium" th:text="${item.customer.name}"></td>
+                        <td class="medium" th:text="${item.serviceType}"></td>
+                        <td class="medium" th:text="${item.transactionDate}"></td>
+                        <td class="medium" th:text="${#numbers.formatDecimal(item.price.stripTrailingZeros().toPlainString(), 0, 0) + ' VNĐ'}"></td>
+                        <td class="medium" th:text="${#numbers.formatDecimal(item.area.stripTrailingZeros().toPlainString(), 0, 0)}"></td>
+                        <td class="medium">
+                            <a th:href="@{/transaction/view(id=${item.id})}">
+                                <button class="btn btn-edit"><i class="fa-solid fa-eye"></i></button>
+                            </a>
+                            <a th:href="@{/transaction/delete(id=${item.id})}"
+                               th:onclick="'return confirm(\'Bạn có chắc chắn muốn xóa danh mục này không?\')'">
+                                <button class="btn btn-remove"><i class="fa-solid fa-trash-can"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <script src="https://kit.fontawesome.com/bd7b2915a7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/list.css}" />
+    <title>Thông tin khách hàng</title>
+</head>
+<body>
+<div class="container">
+    <h3>THÔNG TIN KHÁCH HÀNG</h3>
+    <div class="main-info">
+        <div class="search">
+            <div class="add-button">
+                <a th:href="@{/customers/add}">
+                    <i class="fa-solid fa-plus"></i>
+                    <p>Thêm mới</p>
+                </a>
+            </div>
+
+            <div class="search-input">
+                <form th:action="@{/customers/list}" method="get">
+                    <input type="hidden" name="action" value="room">
+                    <div class="icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="input">
+                        <input type="text" id="customerName" name="customerName" placeholder="Tìm kiếm"
+                               th:value="${param.customerName}" th:onchange="this.form.submit()">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="info-product">
+            <table border="1">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã khách hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Hành động</th>
+                </tr>
+
+                <!-- Hiển thị thông báo lỗi -->
+                <div th:if="${not #strings.isEmpty(errorMessage)}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <!-- Lặp qua danh sách phòng -->
+                <th:block th:each="item, iterStat : ${customers}">
+                    <tr>
+                        <td class="small" th:text="${iterStat.index + 1}"></td>
+                        <td class="medium" th:text="${item.id}"></td>
+                        <td class="medium" th:text="${item.name}"></td>
+                        <td class="medium" th:text="${item.phone}"></td>
+                        <td class="medium" th:text="${item.email}"></td>
+                        <td class="medium">
+                            <a th:href="@{/customers/view(id=${item.id})}">
+                                <button class="btn btn-edit"><i class="fa-solid fa-eye"></i></button>
+                            </a>
+                            <a th:href="@{/customers/delete(id=${item.id})}"
+                               th:onclick="'return confirm(\'Bạn có chắc chắn muốn xóa danh mục này không?\')'">
+                                <button class="btn btn-remove"><i class="fa-solid fa-trash-can"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
