@@ -40,7 +40,7 @@ th, td {
     text-align: center;
 }
 
-table .btn {
+form .btn, table .btn {
     padding: 5px;
     border-radius: 4px;
     color: white;
@@ -64,6 +64,14 @@ table .btn {
     background-color: gold;
     border: 2px solid rgb(239, 218, 98);
     margin-right: 5px;
+}
+
+.btn-search {
+    background-color: lightgray;
+}
+
+.btn-search:hover {
+    background-color: gray;
 }
 
 .btn-edit:hover {
