@@ -79,12 +79,4 @@ public class TransactionController {
         transactionService.delete(id);
         return "redirect:/transaction/list";
     }
-
-    @GetMapping("/search")
-    public String searchTransactionByCustomerName(@RequestParam("customerName") String customerName, Model model) {
-        List<Transaction> transactions = transactionService.findByCustomerName(customerName);
-        model.addAttribute("transactions", transactions);
-        model.addAttribute("customerName", customerName); // Để hiển thị lại trong input tìm kiếm
-        return "redirect:/transaction/list";
-    }
 }
